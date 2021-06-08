@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Game from './Game.jsx'
+import App from './App.jsx'
 
-render(<Game />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));
 

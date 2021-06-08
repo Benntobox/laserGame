@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Laser(dir, color) { return { dir, color }; }
 
 const DIRECTION = { 'UP': [-1, 0], 'DOWN': [1, 0], 'LEFT': [0, -1], 'RIGHT': [0, 1] }
@@ -26,7 +24,11 @@ class Game extends React.Component {
   }
 
   render() {
-    return (<div>SETUP HERE</div>)
+    return (
+    this.grid.map(row => {
+      return <div>{row.map(sq => <div>{sq.pos}</div>)}</div>
+    })
+    )
   }
   
 }
