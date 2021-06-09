@@ -2,6 +2,17 @@
   background-color: blue;
 }
 
+.game-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 400px;
+  max-height: 400px;
+}
+
 .square {
   color: white;
+  height: 50px;
+  max-width: 50px;
+  border: 1px solid red;
+  flex: 0 0 11%;
 }

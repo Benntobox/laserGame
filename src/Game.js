@@ -1,3 +1,21 @@
+import React from 'react';
+
+export const Game = (props) => {
+  console.log(props)
+  return(
+    <div className='game-container'>
+      {props.grid.map(val => (
+      <div 
+        className='square' 
+        key={val + 's'} 
+        onClick={() => props.move(val)}>
+          {val}
+      </div>
+      ))}
+    </div>
+  )
+}
+/*
 function Laser(dir, color) { return { dir, color }; }
 
 const DIRECTION = { 'UP': [-1, 0], 'DOWN': [1, 0], 'LEFT': [0, -1], 'RIGHT': [0, 1] }
@@ -14,6 +32,13 @@ class Game {
       }
       this.grid[x] = row;
     }
+  }
+
+  move(pos, piece) {
+    piece = piece ? piece : 2;
+    let x = Math.floor(pos / this.side);
+    let y = pos % this.side;
+    this.grid[x][y] = piece;
   }
 
   laserEvent(pos, laser) {
@@ -50,3 +75,5 @@ class Emitter extends Square {
 }
 
 export default Game;
+
+*/
