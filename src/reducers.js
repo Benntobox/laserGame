@@ -2,7 +2,17 @@ import { combineReducers } from 'redux';
 
 const EDGE = 8;
 const DIRECTION = { 'up': -EDGE, 'down': EDGE, 'left': -1, 'right': 1 }
-const isInBounds = pos => pos > 0 && pos < 64;
+const isInBounds = (pos, dir) => {
+  if (pos < 0 || pos > 63) { return false; }
+  switch (dir) {
+    case 'left':
+      return pos % 8 !== 7;
+    case 'right':
+      return pos % 8 !== 0;
+    default:
+      return true;
+  }
+}
 
 function getNext(pos, dir) {
   let offset = DIRECTION[dir];
@@ -27,8 +37,9 @@ export const reducers = combineReducers({
 });
 
 function addPiece(state, position, direction, piece) {
-  if (!isInBounds(position)) { return state; }
   let grid = state.map(i=>i);
   grid[position] = piece;
-  return addPiece(grid, getNext(position, direction), direction, piece)
+  let next = getNext(position, direction);
+  if (!isInBounds(next, direction)) { return grid; }
+  return addPiece(grid, next, direction, piece)
 }
