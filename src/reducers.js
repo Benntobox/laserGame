@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
 
+const LASERS = { 'up': 'uplaser', 'down': 'downlaser', 'left': 'leftlaser', 'right': 'rightlaser' }
+const EMITTERS = { 'up': 'upemm', 'down': 'downemm', 'left': 'leftemm', 'right': 'rightemm' }
 const EDGE = 8;
 const DIRECTION = { 'up': -EDGE, 'down': EDGE, 'left': -1, 'right': 1 }
+
 const isInBounds = (pos, dir) => {
   if (pos < 0 || pos > 63) { return false; }
   switch (dir) {
@@ -38,8 +41,8 @@ export const reducers = combineReducers({
 
 function addPiece(state, position, direction, piece) {
   let grid = state.map(i=>i);
-  grid[position] = piece;
+  grid[position] = piece === 'emitter' ? EMITTERS[direction] : LASERS[direction];
   let next = getNext(position, direction);
   if (!isInBounds(next, direction)) { return grid; }
-  return addPiece(grid, next, direction, piece)
+  return addPiece(grid, next, direction, 'laser')
 }

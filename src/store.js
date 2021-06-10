@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 import { reducers } from './reducers.js';
 
 const initial = { 
-  grid: Array(64).fill().map((_,i)=>i)
+  grid: Array(64).fill().map((_,i)=>'empty')
 };
 
 function configureStore(initialState=initial) {

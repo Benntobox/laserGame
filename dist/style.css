@@ -11,10 +11,38 @@ body {
 
 .square {
   color: #ff00ea;
-  height: 50px;
-  max-width: 50px;
+  height: 46px;
+  max-width: 46px;
   border: 1px solid red;
-  flex: 0 0 11%;
+  flex: 0 0 10%;
+}
+
+.empty {
+  content: url('./images/Empty.png');
+}
+
+.uplaser, .downlaser {
+  content: url('./images/Laser-Up.png');
+}
+
+.leftlaser, .rightlaser {
+  content: url('./images/Laser-Side.png');
+}
+
+.upemm {
+  content: url('./images/Emitter-Up.png');
+}
+
+.downemm {
+  content: url('./images/Emitter-Down.png');
+}
+
+.leftemm {
+  content: url('./images/Emitter-Left.png');
+}
+
+.rightemm {
+  content: url('./images/Emitter-Right.png');
 }
 
 .button {
