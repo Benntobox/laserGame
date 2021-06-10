@@ -2,14 +2,18 @@ import React from 'react';
 
 export const Game = (props) => {
   console.log(props)
+  let grid = props.grid
   return(
     <div className='game-container'>
-      {props.grid.map(val => (
+      {grid.map((piece, pos) => (
       <div 
         className='square' 
-        key={val + 's'} 
-        onClick={() => props.move(val)}>
-          {val}
+        key={pos + 's'} 
+        onClick={() => {
+          props.add(pos);
+          console.log(piece)
+        }}>
+          {piece}
       </div>
       ))}
     </div>

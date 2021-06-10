@@ -1,6 +1,6 @@
 import React from 'react';
 import { Game } from './Game.js';
-import { move } from './actions.js';
+import { reset, addEmitter } from './actions.js';
 import { connect } from 'react-redux';
 
 export class App extends React.Component {
@@ -10,8 +10,9 @@ export class App extends React.Component {
         <h1>Lasers!</h1>
         <Game 
         grid={this.props.grid}
-        move={this.props.move}
+        add={this.props.add}
         />
+        <button onClick={this.props.reset}>RESET</button>
       </div>
     )
   }
@@ -20,7 +21,8 @@ export class App extends React.Component {
 const stateToProps = state => ({ grid: state.grid })
 
 const mapDispatchToProps = (dispatch) => ({
-   move: val => dispatch(move(val))
+   add: pos => dispatch(addEmitter(pos, 'down')),
+   reset: () => dispatch(reset())
 })
 
 export const AppContainer = connect(stateToProps, mapDispatchToProps)(App)
