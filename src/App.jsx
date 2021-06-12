@@ -24,6 +24,8 @@ export class App extends React.Component {
   add(pos, dir, piece) {
     this.setState({ piece });
     this.props.add(pos, dir, piece)
+
+    console.log(this.props.grid)
   }
 
   render() {
