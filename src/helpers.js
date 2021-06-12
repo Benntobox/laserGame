@@ -24,14 +24,14 @@ export function getPiece(piece, direction) {
 
 export function addLasers(grid) {
   let lasers = grid.map(n=>n);
-  for (let i = 0; i < grid.length; i++) {
-    let square = grid[i];
+  for (let pos = 0; pos < grid.length; pos++) {
+    let square = grid[pos];
     let direction = square.slice(0, 2);
     let piece = square.slice(2)
     if (piece === 'emitter') {
-      let next = i + DIRECTION[direction];
-      while (isInBounds(next, direction) && grid[next] === 'empty') {
-        lasers[next] = direction + 'laser';
+      let next = pos + DIRECTION[direction];
+      while (isInBounds(next, direction) && lasers[next] !== 'emitter') {
+        lasers[next] = lasers[next].slice(2) === 'laser' ? 'cross' : direction + 'laser';
         next = next + DIRECTION[direction];
       }
     }

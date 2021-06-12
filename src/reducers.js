@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { getPiece, addPiece } from './helpers.js';
 
-
 function grid(state = [], action) {
   switch (action.type) {
     case "ADD":
@@ -13,7 +12,5 @@ function grid(state = [], action) {
   }
 } 
 
-export const reducers = combineReducers({
-  grid
-});
+export const reducers = combineReducers({ grid });
 
