@@ -1,9 +1,9 @@
-const DIRECTION = { 'up': -8, 'down': 8, 'left': -1, 'right': 1 }
+const DIRECTION = { 'up': -8, 'dn': 8, 'lt': -1, 'rt': 1 }
 
 export const isInBounds = (pos, dir) => {
   if (pos < 0 || pos > 63) { return false; }
-  if (dir === 'left') { return pos % 8 !== 7 }
-  if (dir === 'right') { return pos % 8 !== 0 }
+  if (dir === 'lt') { return pos % 8 !== 7 }
+  if (dir === 'rt') { return pos % 8 !== 0 }
   return true;
 }
 
@@ -20,4 +20,28 @@ export function addPiece(state, position, piece) {
 
 export function getPiece(piece, direction) {
   return direction + piece;
+}
+
+export function addLasers(grid) {
+  let lasers = grid.map(n=>n);
+  for (let i = 0; i < grid.length; i++) {
+    let square = grid[i];
+    let direction = square.slice(0, 2);
+    let piece = square.slice(2)
+    if (piece === 'emitter') {
+      let next = i + DIRECTION[direction];
+      while (isInBounds(next, direction) && grid[next] === 'empty') {
+        lasers[next] = direction + 'laser';
+        next = next + DIRECTION[direction];
+      }
+    }
+  }
+  return lasers;
+}
+
+function compareStates(s1, s2) {
+  for (let i = 0; i < s1.length; i++) {
+    if (s1[i] !== s2[i]) { return false; }
+  }
+  return true;
 }

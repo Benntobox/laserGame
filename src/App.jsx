@@ -2,6 +2,7 @@ import React from 'react';
 import { Game } from './Game.js';
 import { reset, addEmitter } from './actions.js';
 import { connect } from 'react-redux';
+import { addLasers } from './helpers.js';
 
 export class App extends React.Component {
   constructor(props) {
@@ -15,17 +16,19 @@ export class App extends React.Component {
   }
 
   setDirection(direction) {
-    let directions = ['up', 'left', 'down', 'right'];
+    let directions = ['up', 'lt', 'dn', 'rt'];
     let newDir = directions[(directions.indexOf(direction) + 1) % 4];
     this.setState({ direction: newDir });
   }
 
   render() {
+    let grid = addLasers(this.props.grid);
+    if (this.state.hasError) { return <h1>Something went wrong.</h1>; }
     return (
       <div className="main">
         <h1>Lasers!</h1>
         <Game 
-        grid={this.props.grid}
+        grid={grid}
         add={this.props.add}
         direction={this.state.direction}
         />
@@ -36,10 +39,6 @@ export class App extends React.Component {
       </div>
     )
   }
-}
-
-const generateLasers = state => {
-  
 }
 
 const stateToProps = state => ({ grid: state.grid })
