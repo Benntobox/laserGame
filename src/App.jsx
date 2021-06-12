@@ -7,11 +7,12 @@ import { addLasers } from './helpers.js';
 export class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { piece: 'emitter', direction: 'up' };
+    this.state = { piece: 'emitter', direction: 'dn' };
+    this.pieces = ['emitter', 'block', 'empty'];
   }
 
   select() {
-    let piece = this.state.piece === 'emitter' ? 'empty' : 'emitter';
+    let piece = this.pieces[(this.pieces.indexOf(this.state.piece) + 1) % this.pieces.length];
     this.setState({ piece })
   }
 

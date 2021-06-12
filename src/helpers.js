@@ -35,7 +35,7 @@ export function addLasers(grid) {
     let piece = square.slice(2)
     if (piece === 'emitter') {
       let next = pos + DIROFFSET[direction];
-      while (isInBounds(next, direction) && lasers[next].slice(2) !== 'emitter') {
+      while (isInBounds(next, direction) && isValidLaserSquare(lasers[next].slice(2))) {
         lasers = addLaser(lasers, next, direction)
         next = next + DIROFFSET[direction];
       }
@@ -49,11 +49,15 @@ function addLaser(lasers, next, dir) {
   let squareDir = square.slice(0, 2);
   let piece = square.slice(2);
   if (piece === 'laser' && squareDir === getPerLeft(dir) || squareDir === getPerRight(dir)) {
-    lasers[next] = 'cross';
-  } else if (square !== 'cross') {
+    lasers[next] = dir + 'cross';
+  } else if (piece !== 'cross') {
     lasers[next] = dir + 'laser';
   }
   return lasers;
+}
+
+function isValidLaserSquare(piece) {
+  return piece !== 'emitter' && piece !== 'block'
 }
 
 function compareStates(s1, s2) {
