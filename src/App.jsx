@@ -22,21 +22,14 @@ export class App extends React.Component {
     this.setState({ direction: newDir });
   }
 
-  add(pos, dir, piece) {
-    this.setState({ piece });
-    this.props.add(pos, dir, piece)
-  }
-
   render() {
     let grid = addLasers(this.props.grid);
-    console.log(grid)
-    if (this.state.hasError) { return <h1>Something went wrong.</h1>; }
     return (
       <div className="main">
         <h1>Lasers!</h1>
         <Game 
         grid={grid}
-        add={this.add.bind(this)}
+        add={this.props.add}
         piece={this.state.piece}
         direction={this.state.direction}
         />
