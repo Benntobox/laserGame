@@ -24,12 +24,11 @@ export class App extends React.Component {
   add(pos, dir, piece) {
     this.setState({ piece });
     this.props.add(pos, dir, piece)
-
-    console.log(this.props.grid)
   }
 
   render() {
     let grid = addLasers(this.props.grid);
+    console.log(grid)
     if (this.state.hasError) { return <h1>Something went wrong.</h1>; }
     return (
       <div className="main">

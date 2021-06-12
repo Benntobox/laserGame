@@ -2,8 +2,8 @@ const DIROFFSET = { 'up': -8, 'dn': 8, 'lt': -1, 'rt': 1 }
 const DIRECTIONS = ['up', 'rt', 'dn', 'lt'];
 
 const getOpposite = dir => DIRECTIONS[(DIRECTIONS.indexOf(dir) + 2) % DIRECTIONS.length];
-const getPerpendicularLeft = dir => DIRECTIONS[(DIRECTIONS.indexOf(dir) + 3) % DIRECTIONS.length];
-const getPerpendicularRight = dir => DIRECTIONS[(DIRECTIONS.indexOf(dir) + 1) % DIRECTIONS.length];
+const getPerLeft = dir => DIRECTIONS[(DIRECTIONS.indexOf(dir) + 3) % DIRECTIONS.length];
+const getPerRight = dir => DIRECTIONS[(DIRECTIONS.indexOf(dir) + 1) % DIRECTIONS.length];
 
 export const isInBounds = (pos, dir) => {
   if (pos < 0 || pos > 63) { return false; }
@@ -36,20 +36,22 @@ export function addLasers(grid) {
     if (piece === 'emitter') {
       let next = pos + DIROFFSET[direction];
       while (isInBounds(next, direction) && lasers[next].slice(2) !== 'emitter') {
-        let nextSquare = lasers[next];
-        let nextDirection = nextSquare.slice(0, 2);
-        let nextPiece = nextSquare.slice(2);
-        if (nextPiece === 'laser' && 
-            nextDirection === getPerpendicularLeft(direction) || 
-            nextDirection === getPerpendicularRight(direction)) {
-          lasers[next] = 'cross';
-        } else {
-          lasers[next] = direction + 'laser';
-        }
-        
+        lasers = addLaser(lasers, next, direction)
         next = next + DIROFFSET[direction];
       }
     }
+  }
+  return lasers;
+}
+
+function addLaser(lasers, next, dir) {
+  let square = lasers[next];
+  let squareDir = square.slice(0, 2);
+  let piece = square.slice(2);
+  if (piece === 'laser' && squareDir === getPerLeft(dir) || squareDir === getPerRight(dir)) {
+    lasers[next] = 'cross';
+  } else if (square !== 'cross') {
+    lasers[next] = dir + 'laser';
   }
   return lasers;
 }
