@@ -17,7 +17,7 @@ body {
   flex: 0 0 10%;
 }
 
-.empty {
+/* .empty {
   content: url('./images/Empty.png');
 }
 
@@ -43,7 +43,7 @@ body {
 
 .rightemm {
   content: url('./images/Emitter-Right.png');
-}
+} */
 
 .button {
   margin: 10px 5px;
