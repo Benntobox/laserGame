@@ -19,7 +19,7 @@ export function addPiece(state, position, piece) {
 }
 
 export function getPiece(piece, direction) {
-  return direction + piece;
+  return piece === 'empty' ? piece : direction + piece;
 }
 
 export function addLasers(grid) {

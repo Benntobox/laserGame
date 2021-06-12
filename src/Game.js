@@ -10,7 +10,7 @@ export const Game = (props) => {
         key={pos + 's'} 
         src={`./images/${piece}.png`}
         onClick={() => {
-          props.add(pos, props.direction);
+          props.add(pos, props.direction, props.piece);
         }}
       ></img>
       ))}

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Game } from './Game.js';
-import { reset, addEmitter } from './actions.js';
+import { reset, addPiece } from './actions.js';
 import { connect } from 'react-redux';
 import { addLasers } from './helpers.js';
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selected: 'emitter', direction: 'up' };
+    this.state = { piece: 'emitter', direction: 'up' };
   }
 
-  select(selected) {
-    selected = selected ? null : 'emitter';
-    this.setState({ selected })
+  select() {
+    let piece = this.state.piece === 'emitter' ? 'empty' : 'emitter';
+    this.setState({ piece })
   }
 
   setDirection(direction) {
@@ -29,13 +29,14 @@ export class App extends React.Component {
         <h1>Lasers!</h1>
         <Game 
         grid={grid}
-        add={this.props.add}
+        add={(pos, dir, piece) => this.props.add(pos, dir, piece)}
+        piece={this.state.piece}
         direction={this.state.direction}
         />
         <button onClick={this.props.reset}>RESET</button>
         <button onClick={this.select.bind(this)}>SELECT</button>
         <button onClick={this.setDirection.bind(this, this.state.direction)}>DIRECTION</button>
-        <div>{this.state.selected}, {this.state.direction}</div>
+        <div>{this.state.piece}, {this.state.direction}</div>
       </div>
     )
   }
@@ -44,7 +45,7 @@ export class App extends React.Component {
 const stateToProps = state => ({ grid: state.grid })
 
 const mapDispatchToProps = (dispatch) => ({
-   add: (pos, dir) => dispatch(addEmitter(pos, dir)),
+   add: (pos, dir, piece) => dispatch(addPiece(pos, dir, piece)),
    reset: () => dispatch(reset())
 })
 

@@ -7,7 +7,7 @@ function grid(state = [], action) {
     case "ADD":
       return addPiece(state, action.position, getPiece(action.piece, action.direction));
     case "RESET":
-      return state.map((_,i)=>i);
+      return state.map((_,i)=>'empty');
     default:
       return state;
   }
