@@ -28,7 +28,7 @@ export class App extends React.Component {
       <div className="main">
         <h1>Lasers!</h1>
         <Game 
-        pieces={pieces}
+        grid={grid}
         add={this.props.add}
         piece={this.state.piece}
         direction={this.state.direction}

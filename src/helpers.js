@@ -50,7 +50,7 @@ export function getNext(pos, dir) {
 }
 
 export function addPiece(state, piece, position, direction) {
-  let piece = getPiece(piece, position, direction)
+  piece = getPiece(piece, position, direction)
   let pieces = state.map(p => p.position === position ? piece : p);
   return pieces;
 }
@@ -59,29 +59,20 @@ const SIZE = 64;
 export function addLaserGrid(pieces) {
   let grid = [];
   for (let i = 0; i < SIZE; i++) {
-    grid[i] = 'empty,';
+    grid[i] = 'dnempty';
   }
   for (let piece of pieces) {
-    if (piece.type !== 'emitter') {
-      grid[piece.position] = `${piece.dir},${piece.type}`;
-    }
+    grid[piece.position] = `${piece.dir}${piece.type}`;
   }
-  for (let piece of pieces) {
-    if (piece.type === 'emitter') {
-      let next = piece.pos + DIROFFSET[piece.dir];
-      if (grid[next] !== )
-    }
-  }
-
-  
+  return grid;
 }
 
-
-
-export function addLasers(grid) {
-  let lasers = grid.map(n=>n);
-  for (let pos = 0; pos < grid.length; pos++) {
-    let square = grid[pos];
+export function addLasers(pieces) {
+  console.log(pieces)
+  let lasers = addLaserGrid(pieces);
+  console.log(lasers)
+  for (let pos = 0; pos < lasers.length; pos++) {
+    let square = lasers[pos];
     let direction = square.slice(0, 2);
     let piece = square.slice(2)
     if (piece === 'emitter') {
