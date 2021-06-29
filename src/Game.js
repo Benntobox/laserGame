@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Game = (props) => {
-  let grid = props.grid
+  let grid = props.grid;
   return(
     <div className='game-container'>
       {grid.map((piece, pos) => (
@@ -11,7 +11,7 @@ export const Game = (props) => {
         style={{width: 380 / grid.length ** .5, height: 380 / grid.length ** .5 }}
         src={`./images/${piece}.png`}
         onClick={() => {
-          props.add(pos, props.direction, props.piece);
+          props.add(props.piece, pos, props.direction);
         }}
       ></img>
       ))}

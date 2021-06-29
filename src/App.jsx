@@ -45,7 +45,7 @@ export class App extends React.Component {
 const stateToProps = state => ({ pieces: state.pieces })
 
 const mapDispatchToProps = (dispatch) => ({
-   add: (pos, dir, piece) => dispatch(addPiece(pos, dir, piece)),
+   add: (pos, dir, piece) => dispatch(addPiece(piece, pos, dir)),
    reset: () => dispatch(reset())
 })
 

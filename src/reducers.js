@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { getPiece, addPiece } from './helpers.js';
+import { addPiece } from './helpers.js';
 
 function pieces(state = [], action) {
   switch (action.type) {

@@ -7,11 +7,13 @@ const getPerpRight = dir => DIRECTIONS[(DIRECTIONS.indexOf(dir) + 1) % DIRECTION
 
 class Piece {
   constructor(type, position) {
-    this.type = type;
-    this.position = position;
+    this._type = type;
+    this._position = position;
   }
-  get pos() { return this.position; }
-  get type() { return this.type; }
+  get pos() { return this._position; }
+  set pos(newPos) { this._position = newPos; }
+  get type() { return this._type; }
+  set type(newType) { this._type = newType; }
 }
 
 class Emitter extends Piece {
@@ -50,8 +52,12 @@ export function getNext(pos, dir) {
 }
 
 export function addPiece(state, piece, position, direction) {
-  piece = getPiece(piece, position, direction)
-  let pieces = state.map(p => p.position === position ? piece : p);
+  let pieces = [];
+  piece = getPiece(piece, position, direction);
+  for (let item of state) {
+    if (item.pos !== piece.pos) { pieces.push(item); }
+  }
+  pieces.push(piece);
   return pieces;
 }
 
@@ -59,22 +65,22 @@ const SIZE = 64;
 export function addLaserGrid(pieces) {
   let grid = [];
   for (let i = 0; i < SIZE; i++) {
-    grid[i] = 'dnempty';
+    grid[i] = 'empty';
   }
   for (let piece of pieces) {
-    grid[piece.position] = `${piece.dir}${piece.type}`;
+    let square = piece.dir ? `${piece.dir}${piece.type}` : `${piece.type}`;
+    grid[piece.pos] = square;
   }
+  console.log(grid)
   return grid;
 }
 
 export function addLasers(pieces) {
-  console.log(pieces)
   let lasers = addLaserGrid(pieces);
-  console.log(lasers)
   for (let pos = 0; pos < lasers.length; pos++) {
     let square = lasers[pos];
     let direction = square.slice(0, 2);
-    let piece = square.slice(2)
+    let piece = square.slice(2);
     if (piece === 'emitter') {
       let next = pos + DIROFFSET[direction];
       while (isInBounds(next, direction) && isValidLaserSquare(lasers[next].slice(2))) {
@@ -88,8 +94,8 @@ export function addLasers(pieces) {
 
 function addLaser(lasers, next, dir) {
   let square = lasers[next];
+  let piece = square === 'empty' || square === 'block' ? square : square.slice(2);
   let squareDir = square.slice(0, 2);
-  let piece = square.slice(2);
   if (piece === 'laser' && squareDir === getPerpLeft(dir) || squareDir === getPerpRight(dir)) {
     lasers[next] = dir + 'cross';
   } else if (piece === 'mirror') {
@@ -101,7 +107,7 @@ function addLaser(lasers, next, dir) {
 }
 
 function isValidLaserSquare(piece) {
-  return piece !== 'emitter' && piece !== 'block'
+  return piece !== 'emitter' && piece !== 'ock'
 }
 
 function mirrorReturn(facing, direction) {

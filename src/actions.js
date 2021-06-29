@@ -1,5 +1,5 @@
-export const addPiece = (position, direction, piece) => {
-  return ({ type: "ADD", position, direction, piece });
+export const addPiece = (piece, position, direction) => {
+  return ({ type: "ADD", piece, position, direction });
 }
 
 export const reset = () => ({ type: "RESET" });
