@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 import { getPiece, addPiece } from './helpers.js';
 
-function grid(state = [], action) {
+function pieces(state = [], action) {
   switch (action.type) {
     case "ADD":
-      return addPiece(state, action.position, getPiece(action.piece, action.direction));
+      return addPiece(state, action.position, action.direction, action.piece);
     case "RESET":
-      return state.map((_,i)=>'empty');
+      return [];
     default:
       return state;
   }
 } 
 
-export const reducers = combineReducers({ grid });
+export const reducers = combineReducers({ pieces });
 

@@ -1,10 +1,8 @@
 import { createStore } from 'redux';
 import { reducers } from './reducers.js';
 
-const SIZE = 64;
-
 const initial = { 
-  grid: Array(SIZE).fill().map((_,i)=>'empty')
+  pieces: []
 };
 
 function configureStore(initialState=initial) {

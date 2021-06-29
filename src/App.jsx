@@ -23,12 +23,12 @@ export class App extends React.Component {
   }
 
   render() {
-    let grid = addLasers(this.props.grid);
+    let grid = addLasers(this.props.pieces);
     return (
       <div className="main">
         <h1>Lasers!</h1>
         <Game 
-        grid={grid}
+        pieces={pieces}
         add={this.props.add}
         piece={this.state.piece}
         direction={this.state.direction}
@@ -42,7 +42,7 @@ export class App extends React.Component {
   }
 }
 
-const stateToProps = state => ({ grid: state.grid })
+const stateToProps = state => ({ pieces: state.pieces })
 
 const mapDispatchToProps = (dispatch) => ({
    add: (pos, dir, piece) => dispatch(addPiece(pos, dir, piece)),
