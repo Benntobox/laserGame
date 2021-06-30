@@ -68,25 +68,25 @@ export function addLaserGrid(pieces) {
     grid[i] = 'empty';
   }
   for (let piece of pieces) {
-    let square = piece.dir ? `${piece.dir}${piece.type}` : `${piece.type}`;
+    console.log(piece)
+    let square = piece.type === 'emitter' ? `${piece.dir}${piece.type}` : `${piece.type}`;
     grid[piece.pos] = square;
   }
   console.log(grid)
   return grid;
 }
 
+let getEmitters = pieces => pieces.filter(piece=>piece.type === 'emitter');
+
 export function addLasers(pieces) {
   let lasers = addLaserGrid(pieces);
-  for (let pos = 0; pos < lasers.length; pos++) {
-    let square = lasers[pos];
-    let direction = square.slice(0, 2);
-    let piece = square.slice(2);
-    if (piece === 'emitter') {
-      let next = pos + DIROFFSET[direction];
-      while (isInBounds(next, direction) && isValidLaserSquare(lasers[next].slice(2))) {
-        lasers = addLaser(lasers, next, direction)
-        next = next + DIROFFSET[direction];
-      }
+  let emitters = getEmitters(pieces);
+  for (let emit of emitters) {
+    let offset = DIROFFSET[emit.dir];
+    let next = emit.pos + offset;
+    while (isValidLaserSquare(lasers[next], next, emit.dir)) {
+      lasers = addLaser(lasers, next, emit.dir);
+      next = next + offset;
     }
   }
   return lasers;
@@ -106,8 +106,12 @@ function addLaser(lasers, next, dir) {
   return lasers;
 }
 
-function isValidLaserSquare(piece) {
-  return piece !== 'emitter' && piece !== 'ock'
+function isValidLaserSquare(square, pos, dir) {
+  if (pos < 0 || pos > 63) { return false; }
+  if (dir === 'lt' && pos % 8 === 7) { return false; }
+  if (dir === 'rt' && pos % 8 === 0) { return false; }
+  console.log('isvalid', square, pos, dir)
+  return square.slice(2) !== 'emitter' && square !== 'block';
 }
 
 function mirrorReturn(facing, direction) {
