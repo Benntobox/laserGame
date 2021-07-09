@@ -4,9 +4,10 @@ import { reset, addPiece } from './actions.js';
 import { connect } from 'react-redux';
 import { generateLaserGrid } from './helpers.js';
 
+const pieces = ['emitter', 'block', 'empty'];
+const directions = ['up', 'lt', 'dn', 'rt'];
+
 export class App extends React.Component {
-  pieces = ['emitter', 'block', 'empty'];
-  directions = ['up', 'lt', 'dn', 'rt'];
 
   constructor(props) {
     super(props);
@@ -36,7 +37,7 @@ export class App extends React.Component {
         direction={this.state.direction}
         />
         <button onClick={this.props.reset}>RESET</button>
-        <button onClick={this.select.bind(this)}>SELECT</button>
+        <button onClick={this.setPiece.bind(this)}>SELECT</button>
         <button onClick={this.setDirection.bind(this, this.state.direction)}>DIRECTION</button>
         <div>{this.state.piece}, {this.state.direction}</div>
       </div>
