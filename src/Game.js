@@ -6,10 +6,11 @@ export const Game = (props) => {
     <div className='game-container'>
       {grid.map((piece, pos) => (
       <img 
-        className={'square ' + piece}
+        className={'square'}
+        id={pos}
         key={pos + 's'} 
         style={{width: 380 / grid.length ** .5, height: 380 / grid.length ** .5 }}
-        src={`./images/${piece}.png`}
+        src={`./images/${piece.dir ? piece.dir + piece.type : piece.type}.png`}
         onClick={() => {
           props.add(props.piece, pos, props.direction);
         }}

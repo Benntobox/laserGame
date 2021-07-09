@@ -2,28 +2,30 @@ import React from 'react';
 import { Game } from './Game.js';
 import { reset, addPiece } from './actions.js';
 import { connect } from 'react-redux';
-import { addLasers } from './helpers.js';
+import { generateLaserGrid } from './helpers.js';
 
 export class App extends React.Component {
+  pieces = ['emitter', 'block', 'empty'];
+  directions = ['up', 'lt', 'dn', 'rt'];
+
   constructor(props) {
     super(props);
-    this.state = { piece: 'emitter', direction: 'dn' };
-    this.pieces = ['emitter', 'block', 'empty'];
+    this.state = { piece: pieces[0], direction: directions[0] };
+    this.size = 64;
   }
 
-  select() {
-    let piece = this.pieces[(this.pieces.indexOf(this.state.piece) + 1) % this.pieces.length];
+  setPiece() {
+    let piece = pieces[(pieces.indexOf(this.state.piece) + 1) % pieces.length];
     this.setState({ piece })
   }
 
   setDirection(direction) {
-    let directions = ['up', 'lt', 'dn', 'rt'];
     let newDir = directions[(directions.indexOf(direction) + 1) % 4];
     this.setState({ direction: newDir });
   }
 
   render() {
-    let grid = addLasers(this.props.pieces);
+    let grid = generateLaserGrid(this.props.pieces, this.size);
     return (
       <div className="main">
         <h1>Lasers!</h1>
